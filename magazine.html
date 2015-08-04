@@ -1,0 +1,26 @@
+<head>
+  <title>magazine</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{#each articles }}
+  	<h1> {{publication.name}} </h1>
+  	<h3> {{display_date}} </h3>
+  	{{body_html}}
+  {{/each}}
+
+<h3> Tags </h3>
+  {{tags}}
+
+<h3> Images </h3> 
+	{{ images }}
+
+
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
