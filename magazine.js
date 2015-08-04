@@ -41,7 +41,6 @@ if (Meteor.isClient) {
         }
 
         console.log('remaininingImages', remainingImages);
-
         console.log('coverimage', Session.get('coverImage'));
 
         Session.set('images', remainingImages);
@@ -72,16 +71,16 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     called = false;
     var url = 'https://tmc-api-v4.herokuapp.com/v4/article/ef892c7d-a5f1-4aa8-93b2-c25096530aa1';
-    // HTTP.get(url, function(error, response){
-    //     if (error) {
-    //       console.log('error received', error);
-    //     }
+    HTTP.get(url, function(error, response){
+        if (error) {
+          console.log('error received', error);
+        }
 
-    //     console.log(response);
-    //     Articles.insert(response);
+        console.log(response);
+        Articles.insert(response);
         Meteor.publish('article', function(){
           return Articles.find({});
         });
-    // });
+    });
   });
 }
