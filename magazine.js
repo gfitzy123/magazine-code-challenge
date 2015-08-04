@@ -20,23 +20,31 @@ if (Meteor.isClient) {
           // console.log('publicationname', array[i].data.article.publication.name);
 
           tags.push(array[i].data.article.tags);
-          console.log('tags', array[i].data.article.tags);
+          // console.log('tags', array[i].data.article.tags);
           // console.log('images', array[i].data.article.images);
           images.push(array[i].data.article.images);
         }
 
-        var coverImages = [];
-        console.log('images', images);
+        var coverImages;
+        var remainingImages = [];
 
         for (var j = 0; j < images[0].length; j++) {
-          console.log('images property check', images[0][j].type);
-            if (images[j][j].type === 'cover') {
-              console.log('imagess', images[0][j]);
-              coverImages.push(images[j]);
+            if (images[0][j].type === 'cover') {
+              Session.set('coverImage', images[0][j].url);
+              continue;
             }
-            Session.set('coverImages', coverImages);
+
+            console.log('remaining', images[0][j].url);
+
+            remainingImages.push({image: images[0][j].url});
+           
         }
 
+        console.log('remaininingImages', remainingImages);
+
+        console.log('coverimage', Session.get('coverImage'));
+
+        Session.set('images', remainingImages);
         Session.set('tags', tags);
         Session.set('arrayOfObjects', arrayOfArticles);
     });
@@ -45,9 +53,12 @@ if (Meteor.isClient) {
       articles: function(){
         return Session.get('arrayOfObjects');
       },
+      coverImage: function(){
+        return Session.get('coverImage');
+      },
       
       images: function(){
-         return Session.get('coverImages');
+         return Session.get('images');
       },
 
       tags: function(){
